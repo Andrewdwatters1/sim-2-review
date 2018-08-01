@@ -19,6 +19,18 @@ class Cart extends Component {
         })
     }
 
+    updateQuantity = (id, update) => {
+        axios.put(`/api/cart/${id}?update=${update}`).then(results => {
+            this.props.updateCart(results.data)
+        })
+    }
+
+    checkout = () => {
+        axios.delete('/api/checkout').then(results => {
+          this.props.updateCart(results.data)  
+        })
+    }
+
     render() {
         let total = 0
         let cart = this.props.cart.map(item => {
@@ -26,8 +38,11 @@ class Cart extends Component {
             return (
                 <div key={item.id}>
                     <h4>{item.name}</h4>
-                    <p>${item.price}</p>
+                    <p>${item.price} each</p>
                     <p>Quantity: {item.quantity}</p>
+                    <button onClick={() => this.updateQuantity(item.id, 'up')}>▲ </button>
+                    <button onClick={() => this.updateQuantity(item.id, 'down')}>▼</button>
+                    <br/>
                     <button onClick={() => this.removeFromCart(item.id)}>Delete</button>
                 </div>
             )
@@ -38,6 +53,7 @@ class Cart extends Component {
                 {cart}
                 <br />
                 <p>Total: ${total}</p>
+                <button onClick={this.checkout}>Checkout</button>
             </div>
         )
     }

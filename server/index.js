@@ -18,5 +18,6 @@ app.get('/api/cart', controller.getCart)
 app.post('/api/cart', controller.addToCart)
 app.put('/api/cart/:id', controller.updateQuantity)
 app.delete('/api/cart/:id', controller.deleteFromCart)
+app.delete('/api/checkout', controller.checkout)
 
 app.listen(SERVER_PORT, () => console.log('You are who you chose to be', SERVER_PORT))

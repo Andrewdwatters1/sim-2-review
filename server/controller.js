@@ -21,9 +21,14 @@ module.exports = {
     },
     updateQuantity: (req, res) => {
         let {id} = req.params
+        let {update} = req.query
         let index = cart.findIndex(item => item.id === +id)
         if(index !== -1) {
-            cart[index].quantity++
+            if(update === 'up'){
+                cart[index].quantity++
+            } else {
+                cart[index].quantity--
+            }
         }
         res.status(200).send(cart)
     },
@@ -35,4 +40,8 @@ module.exports = {
         }
         res.status(200).send(cart)
     },
+    checkout: (req, res) => {
+        cart = []
+        res.status(200).send(cart)
+    }
 }
